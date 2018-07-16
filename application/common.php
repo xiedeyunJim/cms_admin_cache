@@ -10,7 +10,6 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
-use think\facade\Cache;
 function getSite()
 {
 	$_site = db('admin_conf')->field('enname,cnname,value')->select();
@@ -37,11 +36,15 @@ function getSite()
 			# code...
 			break;
 	}
+
+
+	
 	
 }
 
 function getnav()
 {
+	//导航分类
 	$data = db('admin_cate')->where('pid',0)->select();
 	foreach ($data as $key => $value) {
 		# code...
@@ -54,4 +57,5 @@ function getnav()
 		}
 	}
 	Cache::set('nav',$data);
+
 }

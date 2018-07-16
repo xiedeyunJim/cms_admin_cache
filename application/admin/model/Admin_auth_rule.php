@@ -75,5 +75,9 @@ class Admin_auth_rule extends Model{
 		
 		return $arrStr;
 	}
+	public function aaa()
+	{
+		return $this->paginate(5);
+	}
 
 }

@@ -17,7 +17,7 @@
     
         <ul>
             <?php foreach ($vo['childen'] as $key => $value): ?>
-            <li><a href="/index/{switch $value['type']}{case 1}Articlelst{/case}{case 2}article{/case}{case 3}imglist{/case}{/switch}?id={$value.id}">{$value.catename}</a></li>
+            <li><a href="/index/{switch $value['type']}{case 1}Articlelst{/case}{case 2}page{/case}{case 3}imglist{/case}{/switch}/index/id/{$value.id}">{$value.catename}</a></li>
             <?php endforeach ?>
         </ul>    
 

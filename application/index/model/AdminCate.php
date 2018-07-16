@@ -1,13 +1,18 @@
 <?php
 namespace app\index\model;
 use think\Model;
+use think\facade\Cache;
 class AdminCate extends Model{
 
 	public function getchilrendid($cateid){
 		//select(),是查询全部;
 		$cateres = $this->select();
 		//传递参数;
-		return $this->_getchilrendid($cateres,$cateid);
+		$arr =  $this->_getchilrendid($cateres,$cateid);
+		$arr[] = $cateid;
+		$strId =implode(',', $arr);
+		return $strId;
+
 
 	}
 	public function _getchilrendid($cateres,$cateid){
@@ -21,6 +26,33 @@ class AdminCate extends Model{
 				$arr[] = $vo['id'];
 				//通过子栏目的ID，找到子栏目的子栏目
 				$this->_getchilrendid($cateres,$vo['id']);
+			}
+		}
+		return $arr;
+	}
+	public function getChilrendPrevious($cateid)
+	{
+		$cateres = $this->field('id,pid,catename')->cache(true)->select();
+		$cate = $this->field('id,pid,catename')->cache(true)->find($cateid);
+		// dump($cate);
+		$pid =$cate['pid'];
+
+		$arr = $this->_getChilrendPrevious($pid,$cateres);
+
+		$arr[] = $cate;
+		if(!Cache::get('cateLocation'.$cateid)){
+
+			Cache::set('cateLocation'.$cateid,$arr);			
+		}
+
+	}
+	public function _getChilrendPrevious($pid,$cateres)
+	{	
+		static $arr = array();
+		foreach ($cateres as $key => $value) {
+			if($value['id'] ==$pid){
+				$arr[] = $value;
+				$this->_getChilrendPrevious($value['pid'],$cateres);
 			}
 		}
 		return $arr;

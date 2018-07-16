@@ -5,9 +5,11 @@
   <title></title> 
   <meta name="description" content="童老师ThinkPHP5交流群：484519446" /> 
   <meta name="keywords" content="童老师ThinkPHP5交流群：484519446" />
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  {include file='public/headerJs'/}   
  </head>
  <body id="list_style_2" class="list_style_2">
-   {include file='public/headerJs'/}   
+
   <script>
  function subForm()
  {
@@ -28,50 +30,35 @@
    <div id="xh_container"> 
     <div id="xh_content"> 
      <div class="path">
-      <a href="index">主页</a> &gt; 
-      <a href="/lookbike/">单车分类</a> &gt; 
+      <a href="index">主页</a> &gt;
+      {foreach $cateLocation as $key=>$vo}
+      <a href="{:url('articlelst/index',array('id'=>$vo['id']))}">{$vo.catename}</a> &gt;
+      {/foreach} 
      </div>
      <div class="clear"></div> 
      <div class="xh_area_h_3" style="margin-top: 40px;"> 
-      {foreach $article as $key=>$vo}
+      {foreach $articles as $key=>$vo}
       <div class="xh_post_h_3 ofh"> 
        <div class="xh"> 
-        <a target="_blank" href="/lookbike/bmx/240.html" title="{$vo.title}"> <img src="{$vo.site}" alt="{$vo.title}" height="240" width="400" /></a>
+        <a  href="{:url('article/index',array('articleid'=>$vo['id']))}" title="{$vo.title}"> <img src="{$vo.site}" alt="{$vo.title}" height="240" width="400" /></a>
        </div> 
        <div class="r ofh"> 
-        <h2 class="xh_post_h_3_title ofh" style="height:60px;"> <a target="_blank" href="/lookbike/bmx/240.html" title="{$vo.title}">{$vo.title}</a> </h2> 
+        <h2 class="xh_post_h_3_title ofh" style="height:60px;"> <a  href="{:url('article/index',array('articleid'=>$vo['id']))}" title="{$vo.title}">{$vo.title}</a> </h2> 
         <span class="time">{$vo.create_time|date='Y-m-d H:i'}</span> 
         <div class="xh_post_h_3_entry ofh" style="color:#555;height:80px; overflow:hidden;">
           {$vo.detail}
         </div> 
         <div class="b"> 
-         <a href="article/index/id/{$vo.id}" class="xh_readmore" rel="nofollow">read more</a> 
+         <a href="{:url('article/index',array('articleid'=>$vo['id']))}" class="xh_readmore" rel="nofollow">read more</a> 
          <span title="{$vo.like}人赞" class="xh_love"><span class="textcontainer"><span>{$vo.like}</span></span> </span> 
          <span title="{$vo.look}人浏览" class="xh_views">{$vo.look}</span> 
         </div> 
        </div> 
       </div>
       {/foreach}
-      {$article|raw}
+
     
-      <div id="pagination">
-       <div class="wp-pagenavi"> 
-        <span class="current">1</span>
-        <a class="page larger" href="list_2.html">2</a>
-        <a class="page larger" href="list_3.html">3</a>
-        <a class="page larger" href="list_4.html">4</a>
-        <a class="page larger" href="list_5.html">5</a>
-        <a class="page larger" href="list_6.html">6</a>
-        <a class="page larger" href="list_7.html">7</a>
-        <a class="page larger" href="list_8.html">8</a>
-        <a class="page larger" href="list_9.html">9</a>
-        <a class="page larger" href="list_10.html">10</a>
-        <a class="page larger" href="list_11.html">11</a>
-        <a class="page larger" href="list_2.html">下一页</a>
-        <a class="page larger" href="list_28.html">末页</a>
-        <span class="pages">共 28 页，280条</span> 
-       </div>
-      </div> 
+      {$articles|raw}
      </div> 
     </div> 
     <div id="xh_sidebar"> 
@@ -80,41 +67,15 @@
       <div style="background: url('./style/img/hots_bg.png') no-repeat scroll 0 0 transparent;width:250px;height:52px;margin-bottom:15px;"> 
       </div> 
       <ul id="ulHot"> 
+        {foreach $articleHot as $key=>$vo}
        <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;"> 
         <div style="float:left;width:85px;height:55px; overflow:hidden;">
-         <a href="/lookbike/roadbicycle/110.html" target="_blank"><img src="__INDEX__/images/68.png" width="83" title="环西冠军克里斯霍纳的个性化定制座驾 Trek Madone公路车" /></a>
+         <a href="{:url('article/index',array('articleid'=>$vo['id']))}" ><img src="{$vo.site}" width="83" title="{$vo.title}" /></a>
         </div> 
         <div style="float:right;width:145px;height:52px; overflow:hidden;">
-         <a href="/lookbike/roadbicycle/110.html" target="_blank" title="环西冠军克里斯霍纳的个性化定制座驾 Trek Madone公路车">环西冠军克里斯霍纳的个性化定制座驾 Trek Ma</a>
+         <a href="{:url('article/index',array('articleid'=>$vo['id']))}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"  title="{$vo.title}">{$vo.title}</a>
         </div> </li> 
-       <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;"> 
-        <div style="float:left;width:85px;height:55px; overflow:hidden;">
-         <a href="/lookbike/small/184.html" target="_blank"><img src="__INDEX__/images/146.jpg" width="83" title="英式折叠车Brompton Junction 上海旗舰店" /></a>
-        </div> 
-        <div style="float:right;width:145px;height:52px; overflow:hidden;">
-         <a href="/lookbike/small/184.html" target="_blank" title="英式折叠车Brompton Junction 上海旗舰店">英式折叠车Brompton Junction 上海旗舰店</a>
-        </div> </li> 
-       <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;"> 
-        <div style="float:left;width:85px;height:55px; overflow:hidden;">
-         <a href="/lookbike/vintagebicycle/57.html" target="_blank"><img src="__INDEX__/images/17.jpg" width="83" title="延时胶片摄影：上海复古骑行大会" /></a>
-        </div> 
-        <div style="float:right;width:145px;height:52px; overflow:hidden;">
-         <a href="/lookbike/vintagebicycle/57.html" target="_blank" title="延时胶片摄影：上海复古骑行大会">延时胶片摄影：上海复古骑行大会</a>
-        </div> </li> 
-       <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;"> 
-        <div style="float:left;width:85px;height:55px; overflow:hidden;">
-         <a href="/lookbike/small/199.html" target="_blank"><img src="__INDEX__/images/159.jpg" width="83" title="Brompton小布2012女王纪念版" /></a>
-        </div> 
-        <div style="float:right;width:145px;height:52px; overflow:hidden;">
-         <a href="/lookbike/small/199.html" target="_blank" title="Brompton小布2012女王纪念版">Brompton小布2012女王纪念版</a>
-        </div> </li> 
-       <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;"> 
-        <div style="float:left;width:85px;height:55px; overflow:hidden;">
-         <a href="/lookbike/bmx/213.html" target="_blank"><img src="__INDEX__/images/181.png" width="83" title="街头气息十足 Stussy 2013 秋冬系列新品LOOKBOOK" /></a>
-        </div> 
-        <div style="float:right;width:145px;height:52px; overflow:hidden;">
-         <a href="/lookbike/bmx/213.html" target="_blank" title="街头气息十足 Stussy 2013 秋冬系列新品LOOKBOOK">街头气息十足 Stussy 2013 秋冬系列新品LOOKB</a>
-        </div> </li> 
+        {/foreach}
       </ul> 
      </div> 
      <div class="widget portrait"> 

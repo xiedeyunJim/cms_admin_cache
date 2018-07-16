@@ -1,32 +1,22 @@
 <?php
 namespace app\index\controller;
-use think\Controller;
-use think\facade\Cache;
-class Index extends Controller
+use site\Site;
+use app\admin\model\Admin_auth_rule;
+class Index extends Site
 {
-    protected function initialize()
-    {
-        if(!Cache::get('nav')){
-            getnav();
-        }
-        if(!Cache::get('site')){
-            # code...
-            getSite();
-        }
-    }    
     public function index()
-    {
-        $site =Cache::get('site');
-        $nav = Cache::get('nav');
-    	$this->assign(
-    		array(
-    			'site'=>$site,
-
-    			'nav'=>$nav,
-    		)
-    	);
-   
+    {   
     	return $this->fetch();
     }
+        public function test()
+    {
+        $ad = new Admin_auth_rule;
+        $data = $ad->aaa();
+        $this->assign('data',$data);
+        echo $data->getLastSql();
+        return $this->fetch();
+    }
+
+
 
 }

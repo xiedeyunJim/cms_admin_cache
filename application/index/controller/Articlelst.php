@@ -1,40 +1,44 @@
 <?php
 namespace app\index\controller;
-use think\Controller;
 use app\index\model\AdminArticle;
+use site\Site;
 use think\facade\Cache;
-class Articlelst extends Controller
+use think\Db;
+use app\index\model\AdminCate;
+/*
+模型查询的最佳实践原则是：
+在模型外部使用静态方法进行查询，
+内部使用动态方法查询，
+包括使用数据库的查询构造器。模型的查询始终返回对象实例，但可以和数组一样使用。
+*/
+class Articlelst extends Site
 {
-    protected function initialize()
+    public function index()
     {
-        if(!Cache::get('nav')){
-            getnav();
-        }
-        if(!Cache::get('site')){
-            # code...
-            getSite();
-        }
 
-    }     
-    public function index($id)
-    {
         $article = new AdminArticle;
-        $site =Cache::get('site');
-        $nav = Cache::get('nav');
-        $article = Cache::get('article');
-        if(!Cache::get('article')){
-           $articleRes = $article->getAticleId($id);
-        }
+        /*
+            @articles, list列表(缓存)
+
+            @articleHot 右侧列表(缓存)
+
+            @
+        */
+        $articleRes = $article->getArticleId(input('id'));
+        $articles = Cache::get('articles'.input('id'));
+        $hot = $article->getArticleHot(input('id'));
+        $articleHot  = Cache::get('articleHot'.input('id'));
+
     	$this->assign(
     		array(
-    			'site'=>$site,
 
-    			'nav'=>$nav,
+                'articles' => $articles,
 
-                'article' => $article,
+                'articleHot'=>$articleHot,
+
     		)
     	);
-
+    
     	return $this->fetch();
     }
 

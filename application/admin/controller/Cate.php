@@ -10,7 +10,8 @@ class Cate extends Co{
     ];
 
 	public function add()
-	{
+	{	
+
 		if(input("")){
 			$_data = input('');
 			str_replace('，', ',', $_data['site_title']);
@@ -100,6 +101,7 @@ class Cate extends Co{
 		$cate = new Admin_cate;
 
 		if(input('post.')){
+			dump(input('post.'));die;
 			$data = $cate->update(input('post.'));
 			if($data){
 				return $this->success('更新成功');
